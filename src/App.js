@@ -10,7 +10,7 @@ import Signup from './components/Auth/Signup';
 import Logout from './components/Auth/Logout';
 
 function App() {
-  const [user, setuser] = useState('null')
+  const [user, setUser] = useState(null)
 
   return (
     <Router>
@@ -57,11 +57,11 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/dataset" element={<Dataset />} />
                     <Route path="/setting" element={<Setting />} />
-                    <Route path='/logout' element={<Logout setuser={setuser} />} />
+                    <Route path='/logout' element={<Logout setUser={setUser} />} />
                   </>
                   : null
               }
-              <Route path='/login' element={<Login setuser={setuser} />} />
+              <Route path='/login' element={<Login setUser={setUser} />} />
               <Route path='/signup' element={<Signup />} />
             </Routes>
           </div>

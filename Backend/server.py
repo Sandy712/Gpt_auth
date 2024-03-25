@@ -1,7 +1,6 @@
 from flask import Flask, jsonify ,request
 from flask_cors import CORS
 from flask_pymongo import PyMongo
-from flask_bcrypt import Bcrypt
 import jwt
 from datetime import datetime,timedelta
 
@@ -9,7 +8,6 @@ from datetime import datetime,timedelta
 app = Flask(__name__)
 CORS(app)
 
-bcrypt=Bcrypt(app)
 # jwt secret key
 app.config['SECRET_KEY']='27a47733efab4e16bb46afc136fbf5c8'
 
@@ -39,12 +37,11 @@ def register():
         print("username or email is already avaiable")
         return jsonify({'message':"Username or email already exists"}),404
     
-    hashed_password=bcrypt.generate_password_hash(password).decode('utf-8')
     
     mongo.db.auth_database.insert_one({
         'auth_username':username,
         'email':email,
-        'auth_password':hashed_password
+        'auth_password':password
     })
     
     return jsonify({"message":"User registered successfully"}),201
@@ -59,7 +56,7 @@ def login():
     user=mongo.db.auth_database.find_one({'auth_username':username})
     
     
-    if user and bcrypt.check_password_hash(user['auth_password'],password):
+    if user and (user['auth_password'],password) :
         token=jwt.encode({'user_id': str(user['_id']),'exp': datetime.utcnow()+ timedelta(hours=2)},app.config['SECRET_KEY'],algorithm='HS256')
         return jsonify({"message":"Login successfully",'token':token}),200
     else:

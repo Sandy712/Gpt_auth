@@ -3,7 +3,7 @@ import "./Login.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ setuser }) => {
+const Login = ({ setUser }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navi = useNavigate();
@@ -19,15 +19,15 @@ const Login = ({ setuser }) => {
             alert("Successfully login!");
             localStorage.setItem('token', response.data.token);
 
-            setuser(response.data);
+            setUser(response);
             navi('/');
-
+            
         } catch (error) {
             console.log("Incorrect cred!");
         }
-
         setUsername('');
         setPassword('');
+
     };
 
     return (
