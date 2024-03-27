@@ -9,6 +9,7 @@ const Logout = ({ setUser }) => {
         try {
             // Make POST request to Flask backend to logout
             await axios.post('http://localhost:5000/logout');
+            localStorage.removeItem('token');
 
             setUser(null);
             navi('/login');

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 import './App.css';
@@ -11,6 +11,14 @@ import Logout from './components/Auth/Logout';
 
 function App() {
   const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        setUser({ token });
+
+    }
+}, []);
 
   return (
     <Router>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import "./Login.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,8 @@ const Login = ({ setUser }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navi = useNavigate();
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,16 +21,19 @@ const Login = ({ setUser }) => {
             alert("Successfully login!");
             localStorage.setItem('token', response.data.token);
 
-            setUser(response);
+            setUser({token:response.data.token});
             navi('/');
-            
+
         } catch (error) {
+            alert("Login failed!");
             console.log("Incorrect cred!");
         }
         setUsername('');
         setPassword('');
 
     };
+
+
 
     return (
         <div className='container' style={{ height: "70%" }}>
